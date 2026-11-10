@@ -63,6 +63,10 @@ jobs:
           BT=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -n1)
           $BT/zipalign -p -f 4 app/build/outputs/apk/release/app-release-unsigned.apk ../../aligned.apk
           $BT/apksigner sign --ks ../../signing/sctc.jks --ks-key-alias sctc --ks-pass env:KS_PASS --key-pass env:KS_PASS --out ../../SCTC-Academy.apk ../../aligned.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SCTC-Academy-APK
+          path: SCTC-Academy.apk
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: build-${{ github.run_number }}
